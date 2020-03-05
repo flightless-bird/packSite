@@ -13,7 +13,7 @@ class aspZip
 	end property
 	
 	private sub class_initialize()
-		BlankZip = Chr(80) & Chr(75) & Chr(5) & Chr(6) & String(18, 0) 	' Create the blank file structure
+		BlankZip = Chr(80) & Chr(75) & Chr(5) & Chr(6) & String(18, 0) 	
 		NoInterfaceYesToAll = 4 or 16 or 1024
 		set fso = createObject("scripting.filesystemobject")
 		set files = createObject("Scripting.Dictionary")
@@ -93,8 +93,7 @@ class aspZip
 		
 		saved = true
 	end sub
-	
-	
+		
 	public sub ExtractTo(byval path)
 		if typeName(curArquieve) = "Folder3" Then
 			path = Server.MapPath(path)
@@ -105,19 +104,15 @@ class aspZip
 		end if
 	end sub
 end class
-%>
-<%
-option explicit
-Server.scriptTimeout = 1
-%>
 
-<%
-dim zip, filepath
-filepath = "test.zip" ' 生成的文件
+dim zip, backfilepath
+backfilepath = "webBackup.zip" ' 打包文件
 set zip = new aspZip
-zip.OpenArquieve(filepath)
-zip.Add("..\src") '文件夹
-zip.Add(".\default.asp") '文件
+zip.OpenArquieve(backfilepath)
+zip.Add("..\webroot") ' 需要打包的目录或文件,可增加多行
+' 如再加一行,会向zip追加添加的文件
+' zip.Add("web.config")
 zip.CloseArquieve()
 set zip = nothing
+response.write "ok"
 %>
